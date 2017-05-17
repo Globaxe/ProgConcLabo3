@@ -28,8 +28,8 @@ public class Main {
 		BlockingQueue<Avion> airDep = new ArrayBlockingQueue<Avion>(nbAvion);
 		ArrayList<Avion> Threads = new ArrayList<>();
 
-		for (int i = 1; i <= nbAvion; i++) {
-			Avion avion = new Avion(airportFrame, codePlane[i-1], airArr, tarmacLand, tarmacTakeOff, terminal, airDep, nbAvion,
+		for (int i = 0; i < nbAvion; i++) {
+			Avion avion = new Avion(airportFrame, codePlane[i], airArr, tarmacLand, tarmacTakeOff, terminal, airDep, nbAvion,
 					nbPisteArr, nbPisteDep, nbPlace);
 			
 			Threads.add(avion);
