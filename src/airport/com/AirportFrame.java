@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 public class AirportFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-    //liste d'avion à chaque endroits
+    //liste d'avion ï¿½ chaque endroits
 	private List<Avion> avionOnAirArray;
 	private List<Avion> avionLandingArray;
 	private List<Avion> avionTermArray;
@@ -41,6 +41,9 @@ public class AirportFrame extends JFrame {
 	
 
 	public AirportFrame(int _nbPisteArr, int _nbPisteDep, int _nbPlace, int _nbAvion) {
+	    
+	    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	    
 		nbPisteArr = _nbPisteArr;
 		nbPisteDep = _nbPisteDep;
 		nbPlace = _nbPlace;
@@ -89,7 +92,7 @@ public class AirportFrame extends JFrame {
 		JPanel takeOffPanel = new JPanel();
 		takeOffPanel.setLayout(new GridLayout(2 + (nbPisteDep - 1), 1));
 		ImageIcon imgTakeOff = new ImageIcon("img/takeoff.png");
-		nbTakeOffLabel = new JLabel("nb avion au départ :", JLabel.CENTER);
+		nbTakeOffLabel = new JLabel("nb avion au dï¿½part :", JLabel.CENTER);
 
 		for (int i = 1; i <= _nbPisteDep; i++) {
 			JLabel imgTakeOffLabel = new JLabel("", Tools.scaleImage(imgTakeOff, 50, 50), JLabel.CENTER);
