@@ -1,4 +1,7 @@
 package airport.com;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -23,13 +26,30 @@ public class Main {
 		BlockingQueue<Avion> tarmacTakeOff = new ArrayBlockingQueue<Avion>(nbPisteDep);
 		BlockingQueue<Avion> terminal = new ArrayBlockingQueue<Avion>(nbPlace);
 		BlockingQueue<Avion> airDep = new ArrayBlockingQueue<Avion>(nbAvion);
+		ArrayList<Avion> Threads = new ArrayList<>();
 
 		for (int i = 1; i <= nbAvion; i++) {
 			Avion avion = new Avion(airportFrame, codePlane[i-1], airArr, tarmacLand, tarmacTakeOff, terminal, airDep, nbAvion,
 					nbPisteArr, nbPisteDep, nbPlace);
-			new Thread(avion).start();
+			
+			Threads.add(avion);
+			//new Thread(avion).start();
 		}
-
+		
+		airportFrame.getButtonStart().addActionListener(new ActionListener()
+        {
+            
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                for (Avion avion : Threads)
+                {
+                    new Thread(avion).start();
+                }
+                
+            }
+        });
+		
 		airportFrame.setVisible(true);
 		airportFrame.pack();
 

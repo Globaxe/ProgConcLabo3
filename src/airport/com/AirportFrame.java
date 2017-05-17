@@ -34,6 +34,7 @@ public class AirportFrame extends JFrame {
 	private JLabel nbTermLabel;
 	private JLabel nbTakeOffLabel;
 	private JLabel nbOnAirLeaveLabel;
+	private JButton Start;
 
 	private int nbPisteArr;
 	private int nbPisteDep;
@@ -136,7 +137,8 @@ public class AirportFrame extends JFrame {
 		bouton.setLayout(new GridLayout(1, 2)); 
 		JPanel start = new JPanel();
 		JPanel stop = new JPanel();
-		start.add(new JButton("Start"));
+		Start = new JButton("Start");
+		start.add(Start);
 		stop.add(new JButton("Stop"));
 		
 		bouton.add(start);bouton.add(stop);
@@ -179,6 +181,11 @@ public class AirportFrame extends JFrame {
 	    refresh();
 	}
 
+	public JButton getButtonStart()
+	{
+	   return Start; 
+	}
+	
 	public void refresh()
 	{
 	    for (int i = 0; i < this.nbPisteArr; i++)
