@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 public class AirportFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-    //liste d'avion ï¿½ chaque endroits
+    //liste d'avion à chaque endroits
 	private List<Avion> avionOnAirArray;
 	private List<Avion> avionLandingArray;
 	private List<Avion> avionTermArray;

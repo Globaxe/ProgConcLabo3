@@ -1,4 +1,5 @@
 package airport.com;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 //represente l'avion
 
@@ -11,6 +12,12 @@ public class Avion implements Runnable {
 	BlockingQueue<Avion> tarmacTakeOff;
 	BlockingQueue<Avion> terminal;
 	BlockingQueue<Avion> airDep;
+	
+	List<Avion> listAirArr;
+	List<Avion> listTarmacLand;
+	List<Avion> listTarmacTakeOff;
+	List<Avion> listTerminal;
+	List<Avion> listAirDep;
 	int nbAvion;
 	int nbPisteArr;
 	int nbPisteDep;
@@ -18,7 +25,7 @@ public class Avion implements Runnable {
 
 	int position;
 	
-	boolean useBlockingQueue = true;
+	boolean useBlockingQueue;
 	
 	public Avion(AirportFrame _airportFrame, String _codePlane, BlockingQueue<Avion> _airArr, BlockingQueue<Avion> _tarmacLand,
 			BlockingQueue<Avion> _tarmacTakeOff, BlockingQueue<Avion> _terminal, BlockingQueue<Avion> _airDep,
@@ -36,6 +43,27 @@ public class Avion implements Runnable {
 		nbPisteArr = _nbPisteArr;
 		nbPisteDep = _nbPisteDep;
 		nbPlace = _nbPlace;
+		
+		useBlockingQueue=true;
+	}
+	public Avion(AirportFrame _airportFrame, String _codePlane, List<Avion> _airArr, List<Avion> _tarmacLand,
+			List<Avion> _tarmacTakeOff, List<Avion> _terminal, List<Avion> _airDep,
+			int _nbAvion, int _nbPisteArr, int _nbPisteDep, int _nbPlace) {
+		airportFrame = _airportFrame;
+		codePlane = _codePlane;
+
+		listAirArr = _airArr;
+		listTarmacLand = _tarmacLand;
+		listTarmacTakeOff = _tarmacTakeOff;
+		listTerminal = _terminal;
+		listAirDep = _airDep;
+
+		nbAvion = _nbAvion;
+		nbPisteArr = _nbPisteArr;
+		nbPisteDep = _nbPisteDep;
+		nbPlace = _nbPlace;
+		
+		useBlockingQueue=false;
 	}
 
 	public void run() {
@@ -45,11 +73,35 @@ public class Avion implements Runnable {
 				landing();
 			}
 			else{
+				landinguru();
 			}
 			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	public void landinguru() throws InterruptedException{
+		listAirArr.add(this);
+		airportFrame.avionInAir(this);
+		land();
+	}
+	public synchronized void land(){
+		
+		try {
+			
+			while(listTarmacLand.size()>= nbPisteArr){
+				listTarmacLand.wait();
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public synchronized void waitTarmak(){
+			
+		}
+	public synchronized void takeOff(){
+		
 	}
 	
 	public void landing() throws InterruptedException{
@@ -81,6 +133,7 @@ public class Avion implements Runnable {
 		airportFrame.avionInAirLeave(this);
 		System.out.println(this.getCode() + " is going away");
 	}
+	
 	public String getCode() {
 		return codePlane;
 	}
