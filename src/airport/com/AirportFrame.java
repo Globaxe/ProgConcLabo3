@@ -144,4 +144,89 @@ public class AirportFrame extends JFrame {
 
 		this.getContentPane().add(panel);
 	}
+	
+	public void avionInAir(Avion av)
+	{
+	    this.avionOnAirArray.add(av);
+	    Refresh();
+	}
+
+	public void avionLand(Avion av)
+	{
+	    this.avionOnAirArray.remove(av);
+	    this.avionLandingArray.add(av);
+	    Refresh();
+	}
+
+	public void avionOnTerm(Avion av)
+	{
+	    this.avionLandingArray.remove(av);
+	    this.avionTermArray.add(av);
+	    Refresh();
+	}
+
+	public void takeOff(Avion av)
+	{
+	    this.avionTermArray.remove(av);
+	    this.avionTakeOffArray.add(av);
+	    Refresh();
+	}
+
+	public void avionInAirLeave(Avion av)
+	{
+	    this.avionTakeOffArray.remove(av);
+	    this.avionOnAirLeaveArray.add(av);
+	    Refresh();
+	}
+
+	public void Refresh()
+	{
+	    for (int i = 0; i < this.nbPisteArr; i++)
+	    {
+	        JLabel label = (JLabel)this.listArr.get(i - 1);
+	        if (i < this.avionLandingArray.size())
+	        {
+	            Avion av = (Avion)this.avionLandingArray.get(i - 1);
+	            label.setText(av.getCode());
+	            label.setVisible(true);
+	        }
+	        else
+	        {
+	            label.setVisible(false);
+	        }
+	    }
+	    for (int i = 1; i < this.nbPlace; i++)
+	    {
+	        JLabel label = (JLabel)this.listTerm.get(i - 1);
+	        if (i < this.avionTermArray.size())
+	        {
+	            Avion av = (Avion)this.avionTermArray.get(i - 1);
+	            label.setText(av.getCode());
+	            label.setVisible(true);
+	        }
+	        else
+	        {
+	            label.setVisible(false);
+	        }
+	    }
+	    for (int i = 1; i < this.nbPisteDep; i++)
+	    {
+	        JLabel label = (JLabel)this.listDep.get(i - 1);
+	        if (i < this.avionTakeOffArray.size())
+	        {
+	            Avion av = (Avion)this.avionTakeOffArray.get(i - 1);
+	            label.setText(av.getCode());
+	            label.setVisible(true);
+	        }
+	        else
+	        {
+	            label.setVisible(false);
+	        }
+	    }
+	    this.nbOnAirLabel.setText("nb avion en air (arrive) :" + this.avionOnAirArray.size());
+	    this.nbLandingLabel.setText("nb avion en approche :" + this.avionLandingArray.size());
+	    this.nbTermLabel.setText("nb avion au terminal :" + this.avionTermArray.size());
+	    this.nbTakeOffLabel.setText("nb avion au d�part :" + this.avionTakeOffArray.size());
+	    this.nbOnAirLeaveLabel.setText("nb avion en air (depart) :" + this.avionOnAirLeaveArray.size());
+	}
 }
