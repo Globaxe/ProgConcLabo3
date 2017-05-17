@@ -202,7 +202,7 @@ public class AirportFrame extends JFrame {
 	            label.setVisible(false);
 	        }
 	    }
-	    for (int i = 1; i < this.nbPlace; i++)
+	    for (int i = 0; i < this.nbPlace; i++)
 	    {
 	        JLabel label = (JLabel)this.listTerm.get(i);
 	        if (i < this.avionTermArray.size())
@@ -216,7 +216,7 @@ public class AirportFrame extends JFrame {
 	            label.setVisible(false);
 	        }
 	    }
-	    for (int i = 1; i < this.nbPisteDep; i++)
+	    for (int i = 0; i < this.nbPisteDep; i++)
 	    {
 	        JLabel label = (JLabel)this.listDep.get(i);
 	        if (i < this.avionTakeOffArray.size())
