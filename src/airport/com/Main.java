@@ -33,7 +33,6 @@ public class Main {
 					nbPisteArr, nbPisteDep, nbPlace);
 			
 			Threads.add(avion);
-			//new Thread(avion).start();
 		}
 		
 		airportFrame.getButtonStart().addActionListener(new ActionListener()

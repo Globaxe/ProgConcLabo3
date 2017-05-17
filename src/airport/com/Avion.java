@@ -53,28 +53,33 @@ public class Avion implements Runnable {
 	}
 	
 	public void landing() throws InterruptedException{
-		//Arrive dans l'espace aérien de l'aéro-porc.
+		
+	//Arrive dans l'espace aérien de l'aéro-porc.
 		airArr.put(this);
 		airportFrame.avionInAir(this);
-		//(Demande) Atterissage.
+	//(Demande) Atterissage.
 		tarmacLand.put(this);
 		airArr.remove(this);
 		airportFrame.avionLand(this);
-		Thread.sleep(1000);
-		//Attend au terminal.
+		System.out.println(this.getCode() + " is landing.");
+		Thread.sleep(3000); //1s
+	//Attend au terminal.
 		terminal.put(this);
 		tarmacLand.remove(this);
 		airportFrame.avionOnTerm(this);
-		Thread.sleep(3000);
-		//(Demande) Décollage.
+		System.out.println(this.getCode() + " at terminal.");
+		Thread.sleep(10000); //3s
+	//(Demande) Décollage.
 		tarmacTakeOff.put(this);
 		terminal.remove(this);
 		airportFrame.avionTakeOff(this);
-		Thread.sleep(1000);
-		//Tsubasa o Kudasai
+		System.out.println(this.getCode() + " is taking off");
+		Thread.sleep(3000); //1s
+	//Tsubasa o Kudasai
 		airDep.put(this);
 		tarmacTakeOff.remove(this);
 		airportFrame.avionInAirLeave(this);
+		System.out.println(this.getCode() + " is going away");
 	}
 	public String getCode() {
 		return codePlane;
