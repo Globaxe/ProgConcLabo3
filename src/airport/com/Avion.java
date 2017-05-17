@@ -62,19 +62,19 @@ public class Avion implements Runnable {
 		airArr.remove(this);
 		airportFrame.avionLand(this);
 		System.out.println(this.getCode() + " is landing.");
-		Thread.sleep(3000); //1s
+		Thread.sleep(1000); //1s
 	//Attend au terminal.
 		terminal.put(this);
 		tarmacLand.remove(this);
 		airportFrame.avionOnTerm(this);
 		System.out.println(this.getCode() + " at terminal.");
-		Thread.sleep(10000); //3s
+		Thread.sleep(3000); //3s
 	//(Demande) Décollage.
 		tarmacTakeOff.put(this);
 		terminal.remove(this);
 		airportFrame.avionTakeOff(this);
 		System.out.println(this.getCode() + " is taking off");
-		Thread.sleep(3000); //1s
+		Thread.sleep(1000); //1s
 	//Tsubasa o Kudasai
 		airDep.put(this);
 		tarmacTakeOff.remove(this);

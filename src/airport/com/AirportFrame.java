@@ -93,7 +93,7 @@ public class AirportFrame extends JFrame {
 		JPanel takeOffPanel = new JPanel();
 		takeOffPanel.setLayout(new GridLayout(2 + (nbPisteDep - 1), 1));
 		ImageIcon imgTakeOff = new ImageIcon("img/takeoff.png");
-		nbTakeOffLabel = new JLabel("nb avion au dï¿½part :", JLabel.CENTER);
+		nbTakeOffLabel = new JLabel("nb avion au départ :", JLabel.CENTER);
 
 		for (int i = 1; i <= _nbPisteDep; i++) {
 			JLabel imgTakeOffLabel = new JLabel("", Tools.scaleImage(imgTakeOff, 50, 50), JLabel.CENTER);
@@ -233,7 +233,7 @@ public class AirportFrame extends JFrame {
 	    this.nbOnAirLabel.setText("nb avion en air (arrive) :" + this.avionOnAirArray.size());
 	    this.nbLandingLabel.setText("nb avion en approche :" + this.avionLandingArray.size());
 	    this.nbTermLabel.setText("nb avion au terminal :" + this.avionTermArray.size());
-	    this.nbTakeOffLabel.setText("nb avion au dï¿½part :" + this.avionTakeOffArray.size());
+	    this.nbTakeOffLabel.setText("nb avion au départ :" + this.avionTakeOffArray.size());
 	    this.nbOnAirLeaveLabel.setText("nb avion en air (depart) :" + this.avionOnAirLeaveArray.size());
 	}
 }
