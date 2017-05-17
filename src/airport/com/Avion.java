@@ -18,6 +18,8 @@ public class Avion implements Runnable {
 
 	int position;
 	
+	boolean useBlockingQueue = true;
+	
 	public Avion(AirportFrame _airportFrame, String _codePlane, BlockingQueue<Avion> _airArr, BlockingQueue<Avion> _tarmacLand,
 			BlockingQueue<Avion> _tarmacTakeOff, BlockingQueue<Avion> _terminal, BlockingQueue<Avion> _airDep,
 			int _nbAvion, int _nbPisteArr, int _nbPisteDep, int _nbPlace) {
@@ -37,9 +39,43 @@ public class Avion implements Runnable {
 	}
 
 	public void run() {
-		
+		try {
+			
+			if(useBlockingQueue){
+				landing();
+			}
+			else{
+			}
+			
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
-
+	
+	public void landing() throws InterruptedException{
+		//Arrive dans l'espace aérien de l'aéro-porc.
+		airArr.put(this);
+		airportFrame.avionInAir(this);
+		//(Demande) Atterissage.
+		tarmacLand.put(this);
+		airArr.remove(this);
+		airportFrame.avionLand(this);
+		Thread.sleep(1000);
+		//Attend au terminal.
+		terminal.put(this);
+		tarmacLand.remove(this);
+		airportFrame.avionOnTerm(this);
+		Thread.sleep(3000);
+		//(Demande) Décollage.
+		tarmacTakeOff.put(this);
+		terminal.remove(this);
+		airportFrame.avionTakeOff(this);
+		Thread.sleep(1000);
+		//Tsubasa o Kudasai
+		airDep.put(this);
+		tarmacTakeOff.remove(this);
+		airportFrame.avionInAirLeave(this);
+	}
 	public String getCode() {
 		return codePlane;
 	}

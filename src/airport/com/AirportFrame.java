@@ -148,38 +148,38 @@ public class AirportFrame extends JFrame {
 	public void avionInAir(Avion av)
 	{
 	    this.avionOnAirArray.add(av);
-	    Refresh();
+	    refresh();
 	}
 
 	public void avionLand(Avion av)
 	{
 	    this.avionOnAirArray.remove(av);
 	    this.avionLandingArray.add(av);
-	    Refresh();
+	    refresh();
 	}
 
 	public void avionOnTerm(Avion av)
 	{
 	    this.avionLandingArray.remove(av);
 	    this.avionTermArray.add(av);
-	    Refresh();
+	    refresh();
 	}
 
-	public void takeOff(Avion av)
+	public void avionTakeOff(Avion av)
 	{
 	    this.avionTermArray.remove(av);
 	    this.avionTakeOffArray.add(av);
-	    Refresh();
+	    refresh();
 	}
 
 	public void avionInAirLeave(Avion av)
 	{
 	    this.avionTakeOffArray.remove(av);
 	    this.avionOnAirLeaveArray.add(av);
-	    Refresh();
+	    refresh();
 	}
 
-	public void Refresh()
+	public void refresh()
 	{
 	    for (int i = 0; i < this.nbPisteArr; i++)
 	    {
