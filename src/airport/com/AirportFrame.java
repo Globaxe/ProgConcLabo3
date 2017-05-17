@@ -183,10 +183,10 @@ public class AirportFrame extends JFrame {
 	{
 	    for (int i = 0; i < this.nbPisteArr; i++)
 	    {
-	        JLabel label = (JLabel)this.listArr.get(i - 1);
+	        JLabel label = (JLabel)this.listArr.get(i);
 	        if (i < this.avionLandingArray.size())
 	        {
-	            Avion av = (Avion)this.avionLandingArray.get(i - 1);
+	            Avion av = (Avion)this.avionLandingArray.get(i);
 	            label.setText(av.getCode());
 	            label.setVisible(true);
 	        }
@@ -197,10 +197,10 @@ public class AirportFrame extends JFrame {
 	    }
 	    for (int i = 1; i < this.nbPlace; i++)
 	    {
-	        JLabel label = (JLabel)this.listTerm.get(i - 1);
+	        JLabel label = (JLabel)this.listTerm.get(i);
 	        if (i < this.avionTermArray.size())
 	        {
-	            Avion av = (Avion)this.avionTermArray.get(i - 1);
+	            Avion av = (Avion)this.avionTermArray.get(i);
 	            label.setText(av.getCode());
 	            label.setVisible(true);
 	        }
@@ -211,10 +211,10 @@ public class AirportFrame extends JFrame {
 	    }
 	    for (int i = 1; i < this.nbPisteDep; i++)
 	    {
-	        JLabel label = (JLabel)this.listDep.get(i - 1);
+	        JLabel label = (JLabel)this.listDep.get(i);
 	        if (i < this.avionTakeOffArray.size())
 	        {
-	            Avion av = (Avion)this.avionTakeOffArray.get(i - 1);
+	            Avion av = (Avion)this.avionTakeOffArray.get(i);
 	            label.setText(av.getCode());
 	            label.setVisible(true);
 	        }
