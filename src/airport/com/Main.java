@@ -23,6 +23,7 @@ public class Main {
 		int nbPisteArr = 2;//pistes d'atterrisage
 		int nbPisteDep = 2;//"" de depart
 		int nbPlace = 4; //parking 
+		boolean useBlockingQueu = false;//utilise les blocking queu
 
 		AirportFrame airportFrame = new AirportFrame(nbPisteArr, nbPisteDep, nbPlace, nbAvion);
 
@@ -40,19 +41,25 @@ public class Main {
 		
 		ArrayList<Avion> Threads = new ArrayList<>();
 
-		/*for (int i = 0; i < nbAvion; i++) {
-			Avion avion = new Avion(airportFrame, codePlane[i], airArr, tarmacLand, tarmacTakeOff, terminal, airDep, nbAvion,
-					nbPisteArr, nbPisteDep, nbPlace);
-			
-			Threads.add(avion);
-		}*/
+		if(useBlockingQueu){
+		    for (int i = 0; i < nbAvion; i++) {
+	            Avion avion = new Avion(airportFrame, codePlane[i], airArr, tarmacLand, tarmacTakeOff, terminal, airDep, nbAvion,
+	                    nbPisteArr, nbPisteDep, nbPlace,semaphore);
+	            
+	            Threads.add(avion);
+	        }
+		}
+		else
+		{
+		    
+		    for (int i = 0; i < nbAvion; i++) {
+	            Avion avion = new Avion(airportFrame, codePlane[i], listAirArr, listTarmacLand, listTarmacTakeOff, listTerminal, listAirDep, nbAvion,
+	                    nbPisteArr, nbPisteDep, nbPlace, semaphore);
+	            
+	            Threads.add(avion);
+	        }
+		}
 		
-		for (int i = 0; i < nbAvion; i++) {
-            Avion avion = new Avion(airportFrame, codePlane[i], listAirArr, listTarmacLand, listTarmacTakeOff, listTerminal, listAirDep, nbAvion,
-                    nbPisteArr, nbPisteDep, nbPlace, semaphore);
-            
-            Threads.add(avion);
-        }
 		
 		for (Avion avion : Threads)
 		{

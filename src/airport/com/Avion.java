@@ -196,7 +196,7 @@ public class Avion implements Runnable {
     }
 	
 	public void landing() throws InterruptedException{
-		
+	    isPaused();
 	//Arrive dans l'espace a�rien de l'a�ro-porc.
 		airArr.put(this);
 		airportFrame.avionInAir(this);
@@ -206,18 +206,21 @@ public class Avion implements Runnable {
 		airportFrame.avionLand(this);
 		System.out.println(this.getCode() + " is landing.");
 		Thread.sleep(1000); //1s
+		isPaused();
 	//Attend au terminal.
 		terminal.put(this);
 		tarmacLand.remove(this);
 		airportFrame.avionOnTerm(this);
 		System.out.println(this.getCode() + " at terminal.");
 		Thread.sleep(3000); //3s
+		isPaused();
 	//(Demande) D�collage.
 		tarmacTakeOff.put(this);
 		terminal.remove(this);
 		airportFrame.avionTakeOff(this);
 		System.out.println(this.getCode() + " is taking off");
 		Thread.sleep(1000); //1s
+		isPaused();
 	//Tsubasa o Kudasai
 		airDep.put(this);
 		tarmacTakeOff.remove(this);
