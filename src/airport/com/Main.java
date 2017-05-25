@@ -22,10 +22,10 @@ public class Main {
 	public static void main(String[] args) {
 		
 		int nbAvion = 20; //nombre d'avion 
-		int nbPisteArr = 1;//pistes d'atterrisage
-		int nbPisteDep = 1;//"" de depart
-		int nbPlace = 1; //parking 
-		boolean useBlockingQueu = false;//utilise les blocking queu
+		int nbPisteArr = 3;//pistes d'atterrisage
+		int nbPlace = 3; //parking
+		int nbPisteDep = 3;//"" de depart 
+		boolean useBlockingQueu = true;//utilise les blocking queu
 		/*
 	    int nbAvion = 0;
         int nbPisteArr = 0;
