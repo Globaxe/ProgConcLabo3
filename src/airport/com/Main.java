@@ -20,11 +20,31 @@ public class Main {
 	static long time; 
 	
 	public static void main(String[] args) {
+		
 		int nbAvion = 20; //nombre d'avion 
 		int nbPisteArr = 1;//pistes d'atterrisage
 		int nbPisteDep = 1;//"" de depart
 		int nbPlace = 1; //parking 
 		boolean useBlockingQueu = false;//utilise les blocking queu
+		/*
+	    int nbAvion = 0;
+        int nbPisteArr = 0;
+        int nbPisteDep = 0;
+        int nbPlace = 0;
+        boolean useBlockingQueu = false;//utilise les blocking queu
+	    if(args.length==5){
+    		nbAvion = Integer.parseInt(args[0]); //nombre d'avion 
+    		nbPisteArr = Integer.parseInt(args[1]);//pistes d'atterrisage
+    		nbPisteDep = Integer.parseInt(args[2]);//"" de depart
+    		nbPlace = Integer.parseInt(args[3]); //parking 
+    		useBlockingQueu = Boolean.parseBoolean(args[4]);//utilise les blocking queu
+	    }
+	    else
+	    {
+	        System.out.println("Il manques des paramètres");
+	        System.exit(0);
+	    }
+		*/
 
 		AirportFrame airportFrame = new AirportFrame(nbPisteArr, nbPisteDep, nbPlace, nbAvion);
 

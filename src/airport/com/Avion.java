@@ -94,6 +94,8 @@ public class Avion implements Runnable {
 		isPaused();
 		listAirArr.add(this);
 		airportFrame.avionInAir(this);
+		Thread.sleep(10);
+		isPaused();
 		
 		land();
 		Thread.sleep(100);
@@ -201,6 +203,8 @@ public class Avion implements Runnable {
 	//Arrive dans l'espace a�rien de l'a�ro-porc.
 		airArr.put(this);
 		airportFrame.avionInAir(this);
+		Thread.sleep(1000);
+		isPaused();
 	//(Demande) Atterissage.
 		tarmacLand.put(this);
 		airArr.remove(this);
