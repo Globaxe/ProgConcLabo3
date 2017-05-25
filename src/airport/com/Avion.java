@@ -45,6 +45,7 @@ public class Avion implements Runnable {
 		nbPlace = _nbPlace;
 		
 		useBlockingQueue=true;
+		System.out.println("use Blocking Queu ? " +useBlockingQueue);
 	}
 	public Avion(AirportFrame _airportFrame, String _codePlane, List<Avion> _airArr, List<Avion> _tarmacLand,
 			List<Avion> _tarmacTakeOff, List<Avion> _terminal, List<Avion> _airDep,
@@ -64,6 +65,7 @@ public class Avion implements Runnable {
 		nbPlace = _nbPlace;
 		
 		useBlockingQueue=false;
+		System.out.println("use Blocking Queu ? " +useBlockingQueue);
 	}
 
 	public void run() {
@@ -84,29 +86,90 @@ public class Avion implements Runnable {
 		listAirArr.add(this);
 		airportFrame.avionInAir(this);
 		land();
+		Thread.sleep(1000);
+		waitTarmak();
+		Thread.sleep(3000);
+		takeOff();
+		Thread.sleep(1000);
+		inAir();
 	}
-	public synchronized void land(){
+	public void land(){
 		
 		try {
-			
-			while(listTarmacLand.size()>= nbPisteArr){
-				listTarmacLand.wait();
-			}
+			synchronized (listTarmacLand)
+            {
+			    while(listTarmacLand.size()>= nbPisteArr)
+			    {
+			        listTarmacLand.wait();
+			    }
+			    
+	            listTarmacLand.add(this);
+            }
+			airportFrame.avionLand(this);
+			listAirArr.remove(this);
+			System.out.println(this.getCode() + " is landing.");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public synchronized void waitTarmak(){
-			
-		}
-	public synchronized void takeOff(){
-		
+	public void waitTarmak(){
+	    try {
+	        synchronized (listTerminal)
+            {
+	            while(listTerminal.size()>= nbPlace){
+	                listTerminal.wait();
+	            }
+	            listTerminal.add(this);
+            }
+	        synchronized (listTarmacLand)
+            {
+	            listTarmacLand.remove(this);
+	            listTarmacLand.notify();  
+            }
+            airportFrame.avionOnTerm(this);
+            System.out.println(this.getCode() + " at terminal.");
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 	}
+	public void takeOff(){
+	    try {
+	        synchronized (listTarmacTakeOff)
+            {
+	            while(listTarmacTakeOff.size()>= nbPisteDep){
+	                listTarmacTakeOff.wait();
+	            }
+	                listTarmacTakeOff.add(this);
+            }
+            synchronized (listTerminal)
+            {
+                listTerminal.remove(this);
+                listTerminal.notify();
+            }
+            airportFrame.avionTakeOff(this);;
+            System.out.println(this.getCode() + " is taking off.");
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+	}
+	
+	public void inAir(){
+	    synchronized (listTarmacTakeOff)
+        {
+	        listTarmacTakeOff.remove(this);
+	        listTarmacTakeOff.notify();  
+        }
+        listAirDep.add(this);
+        airportFrame.avionInAirLeave(this);
+        System.out.println(this.getCode() + " is in air.");
+    }
 	
 	public void landing() throws InterruptedException{
 		
-	//Arrive dans l'espace aérien de l'aéro-porc.
+	//Arrive dans l'espace aï¿½rien de l'aï¿½ro-porc.
 		airArr.put(this);
 		airportFrame.avionInAir(this);
 	//(Demande) Atterissage.
@@ -121,7 +184,7 @@ public class Avion implements Runnable {
 		airportFrame.avionOnTerm(this);
 		System.out.println(this.getCode() + " at terminal.");
 		Thread.sleep(3000); //3s
-	//(Demande) Décollage.
+	//(Demande) Dï¿½collage.
 		tarmacTakeOff.put(this);
 		terminal.remove(this);
 		airportFrame.avionTakeOff(this);

@@ -2,6 +2,7 @@ package airport.com;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -26,14 +27,29 @@ public class Main {
 		BlockingQueue<Avion> tarmacTakeOff = new ArrayBlockingQueue<Avion>(nbPisteDep);
 		BlockingQueue<Avion> terminal = new ArrayBlockingQueue<Avion>(nbPlace);
 		BlockingQueue<Avion> airDep = new ArrayBlockingQueue<Avion>(nbAvion);
+		
+		List<Avion> listAirArr = new ArrayList<>(nbAvion);
+		List<Avion> listTarmacLand = new ArrayList<>(nbPisteArr);
+		List<Avion> listTarmacTakeOff = new ArrayList<>(nbPisteDep);
+		List<Avion> listTerminal = new ArrayList<>(nbPlace);
+		List<Avion> listAirDep = new ArrayList<>(nbAvion);
+		
+		
 		ArrayList<Avion> Threads = new ArrayList<>();
 
-		for (int i = 0; i < nbAvion; i++) {
+		/*for (int i = 0; i < nbAvion; i++) {
 			Avion avion = new Avion(airportFrame, codePlane[i], airArr, tarmacLand, tarmacTakeOff, terminal, airDep, nbAvion,
 					nbPisteArr, nbPisteDep, nbPlace);
 			
 			Threads.add(avion);
-		}
+		}*/
+		
+		for (int i = 0; i < nbAvion; i++) {
+            Avion avion = new Avion(airportFrame, codePlane[i], listAirArr, listTarmacLand, listTarmacTakeOff, listTerminal, listAirDep, nbAvion,
+                    nbPisteArr, nbPisteDep, nbPlace);
+            
+            Threads.add(avion);
+        }
 		
 		airportFrame.getButtonStart().addActionListener(new ActionListener()
         {
