@@ -21,9 +21,9 @@ public class Main {
 	
 	public static void main(String[] args) {
 		int nbAvion = 20; //nombre d'avion 
-		int nbPisteArr = 2;//pistes d'atterrisage
-		int nbPisteDep = 2;//"" de depart
-		int nbPlace = 4; //parking 
+		int nbPisteArr = 1;//pistes d'atterrisage
+		int nbPisteDep = 1;//"" de depart
+		int nbPlace = 1; //parking 
 		boolean useBlockingQueu = false;//utilise les blocking queu
 
 		AirportFrame airportFrame = new AirportFrame(nbPisteArr, nbPisteDep, nbPlace, nbAvion);
@@ -67,15 +67,19 @@ public class Main {
 		{
 		    new Thread(avion).start();
 		}
-		
+		 
 		airportFrame.getButtonStart().addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-            	time =  System.nanoTime();    			
+            	time =  System.currentTimeMillis();    			
             	paused = false;
 				semaphore.release(1);
+				for (Avion avion : Threads)
+				{
+				    avion.setTime(time);
+				}
             }
         });
 		airportFrame.getButtonStop().addActionListener(new ActionListener()
@@ -93,8 +97,4 @@ public class Main {
 		airportFrame.setVisible(true);
 		airportFrame.pack();
 	}
-	public static void returnTime(){
-		System.out.println("Process time: "+ (System.nanoTime() - time));
-	}
-
 }
