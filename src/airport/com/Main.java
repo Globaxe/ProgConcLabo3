@@ -20,6 +20,13 @@ public class Main {
 	static long time; 
 	
 	public static void main(String[] args) {
+		
+		int nbAvion = 20; //nombre d'avion 
+		int nbPisteArr = 1;//pistes d'atterrisage
+		int nbPisteDep = 1;//"" de depart
+		int nbPlace = 1; //parking 
+		boolean useBlockingQueu = false;//utilise les blocking queu
+		/*
 	    int nbAvion = 0;
         int nbPisteArr = 0;
         int nbPisteDep = 0;
@@ -37,6 +44,8 @@ public class Main {
 	        System.out.println("Il manques des paramètres");
 	        System.exit(0);
 	    }
+		*/
+
 		AirportFrame airportFrame = new AirportFrame(nbPisteArr, nbPisteDep, nbPlace, nbAvion);
 
 		BlockingQueue<Avion> airArr = new ArrayBlockingQueue<Avion>(nbAvion);
@@ -78,15 +87,19 @@ public class Main {
 		{
 		    new Thread(avion).start();
 		}
-		
+		 
 		airportFrame.getButtonStart().addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-            	time =  System.nanoTime();    			
+            	time =  System.currentTimeMillis();    			
             	paused = false;
 				semaphore.release(1);
+				for (Avion avion : Threads)
+				{
+				    avion.setTime(time);
+				}
             }
         });
 		airportFrame.getButtonStop().addActionListener(new ActionListener()
@@ -96,11 +109,7 @@ public class Main {
             {
             	if(paused == false){
 	            	paused = true;
-					try {
-						semaphore.acquire(1);
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
+					semaphore.tryAcquire(1);
 					System.out.println("Works!");   
             	}
             }
@@ -108,8 +117,4 @@ public class Main {
 		airportFrame.setVisible(true);
 		airportFrame.pack();
 	}
-	public static void returnTime(){
-		System.out.println("Process time: "+ (System.nanoTime() - time));
-	}
-
 }

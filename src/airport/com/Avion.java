@@ -24,6 +24,7 @@ public class Avion implements Runnable {
 	int nbPisteArr;
 	int nbPisteDep;
 	int nbPlace;
+	long time;
 
 	int position;
 	
@@ -47,7 +48,7 @@ public class Avion implements Runnable {
 		nbPisteArr = _nbPisteArr;
 		nbPisteDep = _nbPisteDep;
 		nbPlace = _nbPlace;
-		
+
 		semaphore = _semaphore;
 		
 		useBlockingQueue=true;
@@ -97,20 +98,20 @@ public class Avion implements Runnable {
 		isPaused();
 		
 		land();
-		Thread.sleep(10);
+		Thread.sleep(100);
 		isPaused();
 		
 		waitTarmak();
-		Thread.sleep(30);
+		Thread.sleep(300);
 		isPaused();
 		
 		takeOff();
-		Thread.sleep(10);
+		Thread.sleep(100);
 		isPaused();
 		
 		inAir();
 		
-
+		System.out.println("Process time: "+ (System.currentTimeMillis() - time));
 	}
 	public void land(){
 		
@@ -167,7 +168,7 @@ public class Avion implements Runnable {
                 listTerminal.remove(this);
                 listTerminal.notify();
             }
-            airportFrame.avionTakeOff(this);;
+            airportFrame.avionTakeOff(this);
             System.out.println(this.getCode() + " is taking off.");
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
@@ -231,10 +232,14 @@ public class Avion implements Runnable {
 		airportFrame.avionInAirLeave(this);
 		System.out.println(this.getCode() + " is going away");
 		
+		System.out.println("Process time: "+ (System.currentTimeMillis() - time));
 	}
 	
 	public String getCode() {
 		return codePlane;
+	}
+	public void setTime(long _time){
+		time = _time;
 	}
 
 }
