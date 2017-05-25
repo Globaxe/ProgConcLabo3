@@ -94,14 +94,11 @@ public class Main {
             	}
             }
         });
-		
 		airportFrame.setVisible(true);
 		airportFrame.pack();
-
 	}
 	public static void returnTime(){
-		time =  System.nanoTime() - time;
-		System.out.println("Process time: "+time);
+		System.out.println("Process time: "+ (System.nanoTime() - time));
 	}
 
 }
