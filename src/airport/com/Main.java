@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Semaphore;
 
 public class Main {
 
@@ -13,7 +14,10 @@ public class Main {
 			"3B806", "B6842", "B6238", "7B816", "A9437", "849A3", "60B18", "094B6", "4709B", "36A84", "085A3", "0718B",
 			"80B21", "0A369", "5290A", "370B4", "021A3", "84A02", "052A6", "B6350", "630B5", "8B903", "1398B", "2693A",
 			"902A6", "51A20", "971A5", "A7891" };
-
+	
+	static public Semaphore semaphore = new Semaphore(0);
+	static boolean paused = false;
+	
 	public static void main(String[] args) {
 		int nbAvion = 20; //nombre d'avion 
 		int nbPisteArr = 2;//pistes d'atterrisage
@@ -34,7 +38,6 @@ public class Main {
 		List<Avion> listTerminal = new ArrayList<>(nbPlace);
 		List<Avion> listAirDep = new ArrayList<>(nbAvion);
 		
-		
 		ArrayList<Avion> Threads = new ArrayList<>();
 
 		/*for (int i = 0; i < nbAvion; i++) {
@@ -46,10 +49,15 @@ public class Main {
 		
 		for (int i = 0; i < nbAvion; i++) {
             Avion avion = new Avion(airportFrame, codePlane[i], listAirArr, listTarmacLand, listTarmacTakeOff, listTerminal, listAirDep, nbAvion,
-                    nbPisteArr, nbPisteDep, nbPlace);
+                    nbPisteArr, nbPisteDep, nbPlace, semaphore);
             
             Threads.add(avion);
         }
+		
+		for (Avion avion : Threads)
+		{
+		    new Thread(avion).start();
+		}
 		
 		airportFrame.getButtonStart().addActionListener(new ActionListener()
         {
@@ -57,11 +65,24 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                for (Avion avion : Threads)
-                {
-                    new Thread(avion).start();
-                }
-                
+            	paused = false;
+				semaphore.release(1);
+            }
+        });
+		airportFrame.getButtonStop().addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+            	if(paused == false){
+	            	paused = true;
+					try {
+						semaphore.acquire(1);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					System.out.println("Works!");   
+            	}
             }
         });
 		

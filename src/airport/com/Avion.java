@@ -1,6 +1,7 @@
 package airport.com;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Semaphore;
 //represente l'avion
 
 public class Avion implements Runnable {
@@ -18,6 +19,7 @@ public class Avion implements Runnable {
 	List<Avion> listTarmacTakeOff;
 	List<Avion> listTerminal;
 	List<Avion> listAirDep;
+	
 	int nbAvion;
 	int nbPisteArr;
 	int nbPisteDep;
@@ -25,11 +27,13 @@ public class Avion implements Runnable {
 
 	int position;
 	
+	Semaphore semaphore = null;
+	
 	boolean useBlockingQueue;
 	
 	public Avion(AirportFrame _airportFrame, String _codePlane, BlockingQueue<Avion> _airArr, BlockingQueue<Avion> _tarmacLand,
 			BlockingQueue<Avion> _tarmacTakeOff, BlockingQueue<Avion> _terminal, BlockingQueue<Avion> _airDep,
-			int _nbAvion, int _nbPisteArr, int _nbPisteDep, int _nbPlace) {
+			int _nbAvion, int _nbPisteArr, int _nbPisteDep, int _nbPlace, Semaphore _semaphore) {
 		airportFrame = _airportFrame;
 		codePlane = _codePlane;
 
@@ -44,12 +48,14 @@ public class Avion implements Runnable {
 		nbPisteDep = _nbPisteDep;
 		nbPlace = _nbPlace;
 		
+		semaphore = _semaphore;
+		
 		useBlockingQueue=true;
 		System.out.println("use Blocking Queu ? " +useBlockingQueue);
 	}
 	public Avion(AirportFrame _airportFrame, String _codePlane, List<Avion> _airArr, List<Avion> _tarmacLand,
 			List<Avion> _tarmacTakeOff, List<Avion> _terminal, List<Avion> _airDep,
-			int _nbAvion, int _nbPisteArr, int _nbPisteDep, int _nbPlace) {
+			int _nbAvion, int _nbPisteArr, int _nbPisteDep, int _nbPlace, Semaphore _semaphore) {
 		airportFrame = _airportFrame;
 		codePlane = _codePlane;
 
@@ -63,6 +69,8 @@ public class Avion implements Runnable {
 		nbPisteArr = _nbPisteArr;
 		nbPisteDep = _nbPisteDep;
 		nbPlace = _nbPlace;
+		
+		semaphore = _semaphore;
 		
 		useBlockingQueue=false;
 		System.out.println("use Blocking Queu ? " +useBlockingQueue);
@@ -83,14 +91,23 @@ public class Avion implements Runnable {
 		}
 	}
 	public void landinguru() throws InterruptedException{
+
+		isPaused();
 		listAirArr.add(this);
 		airportFrame.avionInAir(this);
+		
 		land();
 		Thread.sleep(1000);
+		isPaused();
+		
 		waitTarmak();
 		Thread.sleep(3000);
+		isPaused();
+		
 		takeOff();
 		Thread.sleep(1000);
+		isPaused();
+		
 		inAir();
 	}
 	public void land(){
@@ -154,6 +171,17 @@ public class Avion implements Runnable {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+	}
+	
+	public void isPaused(){
+		while(!semaphore.tryAcquire(1)) {
+		    try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		semaphore.release();
 	}
 	
 	public void inAir(){
