@@ -17,6 +17,7 @@ public class Main {
 	
 	static public Semaphore semaphore = new Semaphore(0);
 	static boolean paused = false;
+	static long time; 
 	
 	public static void main(String[] args) {
 		int nbAvion = 20; //nombre d'avion 
@@ -42,6 +43,7 @@ public class Main {
 		ArrayList<Avion> Threads = new ArrayList<>();
 
 		if(useBlockingQueu){
+			
 		    for (int i = 0; i < nbAvion; i++) {
 	            Avion avion = new Avion(airportFrame, codePlane[i], airArr, tarmacLand, tarmacTakeOff, terminal, airDep, nbAvion,
 	                    nbPisteArr, nbPisteDep, nbPlace,semaphore);
@@ -51,7 +53,7 @@ public class Main {
 		}
 		else
 		{
-		    
+			
 		    for (int i = 0; i < nbAvion; i++) {
 	            Avion avion = new Avion(airportFrame, codePlane[i], listAirArr, listTarmacLand, listTarmacTakeOff, listTerminal, listAirDep, nbAvion,
 	                    nbPisteArr, nbPisteDep, nbPlace, semaphore);
@@ -68,10 +70,10 @@ public class Main {
 		
 		airportFrame.getButtonStart().addActionListener(new ActionListener()
         {
-            
             @Override
             public void actionPerformed(ActionEvent e)
             {
+            	time =  System.nanoTime();    			
             	paused = false;
 				semaphore.release(1);
             }
@@ -96,6 +98,10 @@ public class Main {
 		airportFrame.setVisible(true);
 		airportFrame.pack();
 
+	}
+	public static void returnTime(){
+		time =  System.nanoTime() - time;
+		System.out.println("Process time: "+time);
 	}
 
 }

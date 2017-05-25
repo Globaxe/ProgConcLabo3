@@ -51,7 +51,6 @@ public class Avion implements Runnable {
 		semaphore = _semaphore;
 		
 		useBlockingQueue=true;
-		System.out.println("use Blocking Queu ? " +useBlockingQueue);
 	}
 	public Avion(AirportFrame _airportFrame, String _codePlane, List<Avion> _airArr, List<Avion> _tarmacLand,
 			List<Avion> _tarmacTakeOff, List<Avion> _terminal, List<Avion> _airDep,
@@ -73,7 +72,6 @@ public class Avion implements Runnable {
 		semaphore = _semaphore;
 		
 		useBlockingQueue=false;
-		System.out.println("use Blocking Queu ? " +useBlockingQueue);
 	}
 
 	public void run() {
@@ -97,18 +95,20 @@ public class Avion implements Runnable {
 		airportFrame.avionInAir(this);
 		
 		land();
-		Thread.sleep(1000);
+		Thread.sleep(10);
 		isPaused();
 		
 		waitTarmak();
-		Thread.sleep(3000);
+		Thread.sleep(30);
 		isPaused();
 		
 		takeOff();
-		Thread.sleep(1000);
+		Thread.sleep(10);
 		isPaused();
 		
 		inAir();
+		
+
 	}
 	public void land(){
 		
@@ -226,6 +226,7 @@ public class Avion implements Runnable {
 		tarmacTakeOff.remove(this);
 		airportFrame.avionInAirLeave(this);
 		System.out.println(this.getCode() + " is going away");
+		
 	}
 	
 	public String getCode() {
