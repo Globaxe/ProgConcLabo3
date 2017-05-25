@@ -85,11 +85,7 @@ public class Main {
             {
             	if(paused == false){
 	            	paused = true;
-					try {
-						semaphore.acquire(1);
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
+					semaphore.tryAcquire(1);
 					System.out.println("Works!");   
             	}
             }
