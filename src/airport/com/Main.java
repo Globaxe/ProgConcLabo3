@@ -21,12 +21,8 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		int nbAvion = 20; //nombre d'avion 
-		int nbPisteArr = 3;//pistes d'atterrisage
-		int nbPlace = 3; //parking
-		int nbPisteDep = 3;//"" de depart 
-		boolean useBlockingQueu = true;//utilise les blocking queu
-		/*
+		
+	    //récupération des paramètres dans la ligne de commande
 	    int nbAvion = 0;
         int nbPisteArr = 0;
         int nbPisteDep = 0;
@@ -44,7 +40,7 @@ public class Main {
 	        System.out.println("Il manques des paramètres");
 	        System.exit(0);
 	    }
-		*/
+		
 
 		AirportFrame airportFrame = new AirportFrame(nbPisteArr, nbPisteDep, nbPlace, nbAvion);
 
@@ -62,6 +58,7 @@ public class Main {
 		
 		ArrayList<Avion> Threads = new ArrayList<>();
 
+		//utilisation du bon constructeur en fonction de l'utilisation de blocking queu ou non
 		if(useBlockingQueu){
 			
 		    for (int i = 0; i < nbAvion; i++) {
@@ -83,11 +80,13 @@ public class Main {
 		}
 		
 		
+		//démmarage des threads
 		for (Avion avion : Threads)
 		{
 		    new Thread(avion).start();
 		}
 		 
+		//implémentation du bouton start
 		airportFrame.getButtonStart().addActionListener(new ActionListener()
         {
             @Override
@@ -102,6 +101,8 @@ public class Main {
 				}
             }
         });
+		
+		//implémentation du bouton stop
 		airportFrame.getButtonStop().addActionListener(new ActionListener()
         {
             @Override

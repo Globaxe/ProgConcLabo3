@@ -184,6 +184,7 @@ public class AirportFrame extends JFrame {
 	    refresh();
 	}
 
+	//deux fonction pour pouvoir implémenter le code daes boutons dans le main
 	public JButton getButtonStart()
 	{
 	   return Start; 
@@ -193,6 +194,7 @@ public class AirportFrame extends JFrame {
 	   return Stop; 
 	}
 	
+	//fonction pour la gestion de l'affichage
 	public void refresh()
 	{
 	    for (int i = 0; i < this.nbPisteArr; i++)
