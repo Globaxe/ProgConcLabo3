@@ -111,7 +111,7 @@ public class Main {
             	if(paused == false){
 	            	paused = true;
 					semaphore.tryAcquire(1);
-					System.out.println("Works!");   
+					System.out.println("Paused!");   
             	}
             }
         });
